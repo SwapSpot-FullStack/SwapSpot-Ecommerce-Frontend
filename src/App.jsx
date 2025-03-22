@@ -4,9 +4,10 @@ import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Listings from "./pages/Listings";
 import CreateListing from "./pages/CreateListing";
-import PrivateRoute from "./utils/PrivateRoute";
-import EditListing from "./pages/EditListings";
+import EditListing from "./pages/EditListing";
+import PrivateRoute from "./utils/PrivateRoute"; // Import PrivateRoute component
 import Dashboard from "./pages/Dashboard";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/listings" element={<Listings />} />
+        <Route path="/register" element={<Register />} />
 
         {/* Protected Routes */}
         <Route
