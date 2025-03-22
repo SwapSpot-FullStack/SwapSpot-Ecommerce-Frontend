@@ -26,6 +26,10 @@ function Navbar() {
               <Link to="/dashboard" className="hover:underline">
                 Dashboard
               </Link>
+              <Link to="/register" className="hover:underline">
+                Register
+              </Link>
+
               <Link to="/create" className="hover:underline">
                 Create
               </Link>
