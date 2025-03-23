@@ -11,42 +11,25 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-green-700 text-white px-4 py-3 shadow">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="font-bold text-xl">
-          SwapSpot
-        </Link>
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center text-sm text-white">
-          <Link to="/listings" className="hover:underline">
-            Listings
-          </Link>
+    <nav className="sub-navbar">
+      <Link to="/">🏠 Home</Link>
+      <Link to="/listings">🛍️ Products</Link>
+      <Link to="/chat">💬 Chat</Link>
 
-          {isAuthenticated ? (
-            <>
-              <Link to="/dashboard" className="hover:underline">
-                Dashboard
-              </Link>
-              <Link to="/register" className="hover:underline">
-                Register
-              </Link>
-
-              <Link to="/create" className="hover:underline">
-                Create
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="hover:underline text-red-300"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link to="/login" className="hover:underline">
-              Login
-            </Link>
-          )}
-        </div>
-      </div>
+      {isAuthenticated ? (
+        <>
+          <Link to="/dashboard">📂 Dashboard</Link>
+          <Link to="/create">➕ New</Link>
+          <button onClick={handleLogout} className="subnav-logout-btn">
+            🚪 Logout
+          </button>
+        </>
+      ) : (
+        <>
+          <Link to="/login">🔐 Login</Link>
+          <Link to="/register">📝 Register</Link>
+        </>
+      )}
     </nav>
   );
 }

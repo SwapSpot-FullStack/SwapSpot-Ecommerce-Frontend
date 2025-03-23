@@ -1,4 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
@@ -9,16 +16,25 @@ import PrivateRoute from "./utils/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import "./index.css";
+import ListingDetails from "./pages/ListingDetails";
+import ChatList from "./pages/ChatList";
+import ChatPage from "./pages/ChatPage";
 
-function App() {
+function AppWrapper() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   return (
-    <Router>
-      <Navbar />
+    <>
+      {!isHomePage && <Navbar />} {/* ✅ Hide on homepage */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/listings" element={<Listings />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/listings/:id" element={<ListingDetails />} />
+        <Route path="/chat" element={<ChatList />} />
+        <Route path="/chat/:id" element={<ChatPage />} />
 
         {/* Protected Routes */}
         <Route
@@ -46,6 +62,14 @@ function App() {
           }
         />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <AppWrapper />
     </Router>
   );
 }
