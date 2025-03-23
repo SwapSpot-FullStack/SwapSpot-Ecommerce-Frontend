@@ -5,9 +5,10 @@ import Navbar from "./components/Navbar";
 import Listings from "./pages/Listings";
 import CreateListing from "./pages/CreateListing";
 import EditListing from "./pages/EditListing";
-import PrivateRoute from "./utils/PrivateRoute"; // Import PrivateRoute component
+import PrivateRoute from "./utils/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
+import "./index.css";
 
 function App() {
   return (
