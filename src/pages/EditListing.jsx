@@ -13,10 +13,8 @@ function EditListing() {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        const res = await axios.get("/listings/my");
-        const listing = res.data.find((l) => l._id === id);
-        if (!listing) throw new Error("Listing not found");
-        setInitialData(listing);
+        const res = await axios.get(`/listings/${id}`); // ✅ RESTful route
+        setInitialData(res.data);
       } catch (err) {
         toast.error("Failed to load listing");
       } finally {
@@ -40,17 +38,27 @@ function EditListing() {
     }
   };
 
-  if (loading && !initialData) return <p className="p-4">Loading...</p>;
+  if (loading && !initialData)
+    return (
+      <div className="flex justify-center items-center min-h-screen text-white">
+        Loading listing...
+      </div>
+    );
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4 bg-white rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Edit Listing</h2>
-      <ListingForm
-        initialData={initialData}
-        onSubmit={handleUpdate}
-        loading={loading}
-      />
-    </div>
+    <main className="login-page">
+      <div
+        className="glass-box"
+        style={{ maxWidth: "600px", margin: "2rem auto" }}
+      >
+        <h2 className="form-title">Edit Listing</h2>
+        <ListingForm
+          initialData={initialData}
+          onSubmit={handleUpdate}
+          loading={loading}
+        />
+      </div>
+    </main>
   );
 }
 

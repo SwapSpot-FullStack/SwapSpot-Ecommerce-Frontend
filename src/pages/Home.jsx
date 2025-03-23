@@ -1,52 +1,57 @@
 import { Link } from "react-router-dom";
-import { FaSearch, FaHome, FaShoppingCart, FaComments } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import Navbar from "../components/Navbar";
+import featuredImg from "../assets/featured-img.png";
 
 function Home() {
   return (
-    <div>
-      <header>
+    <div className="page-wrapper">
+      {/* Green Header */}
+      <header className="home-header">
         <h1>SwapSpot</h1>
         <FaSearch />
       </header>
 
-      <nav>
-        <div>
-          <FaHome /> Home
-        </div>
-        <div>
-          <FaShoppingCart /> Products
-        </div>
-        <div>
-          <FaComments /> Chat
-        </div>
-      </nav>
+      {/* Sub-navigation bar */}
+      <Navbar />
 
-      <main>
+      <main className="main-content">
+        {/* Featured Section */}
         <div className="featured">
           <h2 className="pill-label">Featured</h2>
           <div className="featured-card">
-            <div
-              className="image-placeholder"
+            <img
+              src={featuredImg}
+              alt="Featured"
+              className="featured-image"
               style={{
-                width: 80,
-                height: 80,
-                backgroundColor: "#ccc",
+                width: 300,
+                height: 300,
                 borderRadius: "50%",
+                objectFit: "cover",
               }}
-            ></div>
+            />
             <div>
               <p>
                 Lorem ipsum dolor sit amet. Et corrupti rerum in expedita animi
-                voluptatibus. Aut sunt doloribus.
+                voluptatibus. Aut sunt doloribus. Lorem ipsum dolor sit amet
+                consectetur adipisicing elit. Blanditiis debitis sit magnam
+                labore culpa temporibus pariatur numquam ea fuga optio
+                laboriosam eius, commodi praesentium. Magni ullam libero rem
+                maxime incidunt! Lorem ipsum dolor sit amet consectetur
+                adipisicing elit. Totam tempora ad nulla a dignissimos quod
+                vero, consequuntur atque illo dicta. Ut, atque nihil. Provident
+                consequatur hic possimus voluptate deleniti beatae.
               </p>
               <button className="pill-button">View More</button>
             </div>
           </div>
         </div>
 
+        {/* Categories Section */}
         <div className="categories">
           <h2 className="pill-label">Categories</h2>
-          <div>
+          <div className="category-grid">
             <button className="category-button">Electronics</button>
             <button className="category-button">Fashion</button>
             <button className="category-button">Outdoors</button>
@@ -56,10 +61,11 @@ function Home() {
             List Item
           </Link>
         </div>
-        <footer className="footer">
-          <p>&copy; 2025 SwapSpot. All rights reserved.</p>
-        </footer>
       </main>
+
+      <footer className="footer">
+        <p>&copy; 2025 SwapSpot. All rights reserved.</p>
+      </footer>
     </div>
   );
 }

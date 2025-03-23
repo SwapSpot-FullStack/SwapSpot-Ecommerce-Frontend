@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "../api/axios";
+import {
+  FaSearch,
+  FaCommentDots,
+  FaFilter,
+  FaSortAmountDownAlt,
+} from "react-icons/fa";
+import placeholder from "../assets/placeholder.png";
+import { Link } from "react-router-dom";
 
 function Listings() {
   const [listings, setListings] = useState([]);
@@ -9,8 +17,52 @@ function Listings() {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        const res = await axios.get("/listings");
-        setListings(res.data);
+        const mock = [
+          {
+            _id: "1",
+            title: "Tent",
+            description:
+              "Waterproof and lightweight. Great for hiking and camping.",
+            price: 50,
+            category: "Outdoors",
+          },
+          {
+            _id: "2",
+            title: "Coffee Maker",
+            description: "Brew the best coffee. Works with ground or capsule.",
+            price: 25,
+            category: "Kitchen",
+          },
+          {
+            _id: "3",
+            title: "Bluetooth Speaker",
+            description: "Portable with deep bass and long battery life.",
+            price: 40,
+            category: "Electronics",
+          },
+          {
+            _id: "4",
+            title: "Winter Jacket",
+            description: "Warm and waterproof. Perfect for snow or rain.",
+            price: 60,
+            category: "Fashion",
+          },
+          {
+            _id: "5",
+            title: "Winter Jacket",
+            description: "Warm and waterproof. Perfect for snow or rain.",
+            price: 60,
+            category: "Fashion",
+          },
+          {
+            _id: "6",
+            title: "Winter Jacket",
+            description: "Warm and waterproof. Perfect for snow or rain.",
+            price: 60,
+            category: "Fashion",
+          },
+        ];
+        setListings(mock);
       } catch (err) {
         setError(err.response?.data?.message || "Failed to fetch listings");
       } finally {
@@ -21,28 +73,81 @@ function Listings() {
     fetchListings();
   }, []);
 
-  if (loading) return <p className="p-4">Loading listings...</p>;
-  if (error) return <p className="p-4 text-red-500">{error}</p>;
+  const handleSort = () => {
+    const sorted = [...listings].sort((a, b) => a.price - b.price);
+    setListings(sorted);
+  };
+
+  const handleFilter = () => {
+    const filtered = listings.filter((l) => l.category === "Outdoors");
+    setListings(filtered);
+  };
+
+  if (loading) return <p className="page-message">Loading listings...</p>;
+  if (error) return <p className="form-error">{error}</p>;
 
   return (
-    <div className="px-4 sm:px-6 md:px-8 lg:px-10 py-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {listings.map((listing) => (
-          <div
-            key={listing._id}
-            className="border rounded-xl p-4 bg-white shadow hover:shadow-lg transition"
-          >
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              {listing.title}
-            </h3>
-            <p className="text-sm text-gray-600 mb-2">{listing.description}</p>
-            <p className="text-xs text-gray-500 italic">
-              Category: {listing.category}
-            </p>
-          </div>
-        ))}
+    <main className="listings-page">
+      <div className="sub-navbar">
+        <h2 className="pill-label">Products</h2>
       </div>
-    </div>
+
+      <div className="filter-sort-bar">
+        <button className="pill-button" onClick={handleFilter}>
+          <FaFilter style={{ marginRight: "6px" }} />
+          Filter
+        </button>
+        <button className="pill-button" onClick={handleSort}>
+          <FaSortAmountDownAlt style={{ marginRight: "6px" }} />
+          Sort
+        </button>
+      </div>
+
+      {listings.length === 0 ? (
+        <p className="page-message">
+          No listings yet. Be the first to list an item!
+        </p>
+      ) : (
+        <div className="listings-grid">
+          {listings.map((listing) => (
+            <Link
+              to={`/listings/${listing._id}`}
+              className="listing-card-link"
+              key={listing._id}
+            >
+              <div className="listing-card">
+                <img
+                  src={listing.imageUrl || placeholder}
+                  alt={listing.title}
+                  className="listing-image"
+                />
+                <div className="listing-info">
+                  <h3 className="card-title">{listing.title}</h3>
+                  <p className="card-description">${listing.price}</p>
+                  <p className="listing-description">{listing.description}</p>
+                  <span className="listing-category-pill">
+                    {listing.category}
+                  </span>
+                </div>
+                <div className="listing-actions">
+                  <button
+                    className="listing-icon"
+                    title="Message Seller"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      alert("Message feature coming soon!");
+                    }}
+                  >
+                    <FaCommentDots />
+                  </button>
+                  <FaSearch className="listing-icon" title="View Item" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </main>
   );
 }
 

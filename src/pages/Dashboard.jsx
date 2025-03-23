@@ -17,10 +17,10 @@ function Dashboard() {
   };
 
   const handleDelete = async (id) => {
-    const confirm = window.confirm(
+    const confirmDelete = window.confirm(
       "Are you sure you want to delete this listing?"
     );
-    if (!confirm) return;
+    if (!confirmDelete) return;
 
     try {
       await axios.delete(`/listings/${id}`);
@@ -37,41 +37,41 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold mb-6">My Listings</h2>
-      {error && <p className="text-red-500">{error}</p>}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {listings.map((listing) => (
-          <div
-            key={listing._id}
-            className="border p-4 rounded-xl bg-white shadow flex flex-col justify-between"
-          >
-            <div>
-              <h3 className="text-xl font-semibold">{listing.title}</h3>
-              <p className="text-sm text-gray-600">{listing.description}</p>
-              <p className="text-xs text-gray-400 mt-2 italic">
-                Category: {listing.category}
-              </p>
+    <main className="dashboard-page">
+      <h2 className="dashboard-title">My Listings</h2>
+      {error && <p className="form-error">{error}</p>}
 
-              {/* 👇 EDIT LINK */}
-              <Link
-                to={`/edit/${listing._id}`}
-                className="text-blue-600 hover:underline text-sm inline-block mt-2"
-              >
-                Edit
-              </Link>
-            </div>
-
-            <button
-              onClick={() => handleDelete(listing._id)}
-              className="mt-4 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
-            >
-              Delete
-            </button>
-          </div>
-        ))}
+      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+        <Link to="/create" className="list-item-button">
+          + Create New Listing
+        </Link>
       </div>
-    </div>
+
+      {listings.length === 0 ? (
+        <p className="page-message">You haven’t listed anything yet!</p>
+      ) : (
+        <div className="dashboard-grid">
+          {listings.map((listing) => (
+            <div key={listing._id} className="dashboard-card">
+              <div>
+                <h3 className="card-title">{listing.title}</h3>
+                <p className="card-description">{listing.description}</p>
+                <p className="card-category">Category: {listing.category}</p>
+                <Link to={`/edit/${listing._id}`} className="edit-link">
+                  Edit
+                </Link>
+              </div>
+              <button
+                onClick={() => handleDelete(listing._id)}
+                className="delete-button"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </main>
   );
 }
 
