@@ -8,18 +8,38 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validation
+    if (!email.includes("@")) {
+      setError("Enter a valid email.");
+      toast.error("Invalid email.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      toast.error("Password too short.");
+      return;
+    }
+
     try {
       const response = await axios.post("/auth/login", { email, password });
       const token = response.data.token;
 
       login(token);
       toast.success("Logged in successfully 👋");
+
+      // Clear inputs
+      setEmail("");
+      setPassword("");
+
       navigate("/listings");
     } catch (err) {
       setError(err.response?.data?.message ?? "Login failed");
@@ -28,34 +48,59 @@ function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4 bg-white rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4">Login</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full border rounded px-3 py-2"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full border rounded px-3 py-2"
-          required
-        />
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Login
-        </button>
-      </form>
-    </div>
+    <main className="login-page">
+      <div className="glass-box">
+        <h2 className="form-title">Login</h2>
+        <form onSubmit={handleSubmit} className="form-container">
+          <p className="form-link-text">
+            Don’t have an account?{" "}
+            <a href="/register" className="form-link">
+              Register here
+            </a>
+          </p>
+
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="form-input"
+            required
+          />
+
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-input"
+              required
+            />
+            <span
+              onClick={() => setShowPassword((prev) => !prev)}
+              style={{
+                position: "absolute",
+                right: "1rem",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "#fff",
+                fontSize: "0.9rem",
+              }}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
+
+          {error && <p className="form-error">{error}</p>}
+
+          <button type="submit" className="form-button">
+            Login
+          </button>
+        </form>
+      </div>
+    </main>
   );
 }
 
