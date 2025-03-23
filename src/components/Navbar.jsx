@@ -11,12 +11,12 @@ function Navbar() {
   };
 
   return (
-    <nav className="bg-gray-800 text-white px-4 py-3">
+    <nav className="bg-green-700 text-white px-4 py-3 shadow">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link to="/" className="font-bold text-xl">
           SwapSpot
         </Link>
-        <div className="space-x-4 flex items-center">
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center text-sm text-white">
           <Link to="/listings" className="hover:underline">
             Listings
           </Link>
