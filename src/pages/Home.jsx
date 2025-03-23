@@ -1,56 +1,67 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import { FaSearch, FaHome, FaShoppingCart, FaComments } from "react-icons/fa";
 
-function Navbar() {
-  const { isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
+function Home() {
   return (
-    <nav className="bg-gray-800 text-white px-4 py-3 shadow">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="font-bold text-xl tracking-wide">
-          SwapSpot
-        </Link>
+    <div>
+      <header>
+        <h1>SwapSpot</h1>
+        <FaSearch />
+      </header>
 
-        <div className="flex items-center space-x-6 text-sm">
-          <Link to="/listings" className="hover:underline">
-            Listings
-          </Link>
-
-          {isAuthenticated ? (
-            <>
-              <Link to="/dashboard" className="hover:underline">
-                Dashboard
-              </Link>
-              <Link to="/create" className="hover:underline">
-                Create
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="hover:underline text-red-400"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:underline">
-                Login
-              </Link>
-              <Link to="/register" className="hover:underline">
-                Register
-              </Link>
-            </>
-          )}
+      <nav>
+        <div>
+          <FaHome /> Home
         </div>
-      </div>
-    </nav>
+        <div>
+          <FaShoppingCart /> Products
+        </div>
+        <div>
+          <FaComments /> Chat
+        </div>
+      </nav>
+
+      <main>
+        <div className="featured">
+          <h2 className="pill-label">Featured</h2>
+          <div className="featured-card">
+            <div
+              className="image-placeholder"
+              style={{
+                width: 80,
+                height: 80,
+                backgroundColor: "#ccc",
+                borderRadius: "50%",
+              }}
+            ></div>
+            <div>
+              <p>
+                Lorem ipsum dolor sit amet. Et corrupti rerum in expedita animi
+                voluptatibus. Aut sunt doloribus.
+              </p>
+              <button className="pill-button">View More</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="categories">
+          <h2 className="pill-label">Categories</h2>
+          <div>
+            <button className="category-button">Electronics</button>
+            <button className="category-button">Fashion</button>
+            <button className="category-button">Outdoors</button>
+            <button className="category-button">Kitchen</button>
+          </div>
+          <Link to="/create" className="list-item-button">
+            List Item
+          </Link>
+        </div>
+        <footer className="footer">
+          <p>&copy; 2025 SwapSpot. All rights reserved.</p>
+        </footer>
+      </main>
+    </div>
   );
 }
 
-export default Navbar;
+export default Home;
