@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ListingForm from "../components/ListingForm";
+import ListingForm from "../components/ListingForms";
 import axios from "../api/axios";
 import toast from "react-hot-toast";
 

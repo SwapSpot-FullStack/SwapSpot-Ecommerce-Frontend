@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -18,9 +19,11 @@ function Login() {
       const token = response.data.token;
 
       login(token);
+      toast.success("Logged in successfully 👋");
       navigate("/listings");
     } catch (err) {
       setError(err.response?.data?.message ?? "Login failed");
+      toast.error(err.response?.data?.message ?? "Login failed");
     }
   };
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
+import toast from "react-hot-toast";
 
 function Dashboard() {
   const [listings, setListings] = useState([]);
@@ -16,10 +17,17 @@ function Dashboard() {
   };
 
   const handleDelete = async (id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this listing?"
+    );
+    if (!confirm) return;
+
     try {
       await axios.delete(`/listings/${id}`);
       setListings((prev) => prev.filter((l) => l._id !== id));
+      toast.success("Listing deleted successfully ✅");
     } catch (err) {
+      toast.error("Delete failed ❌");
       console.error("Delete failed:", err);
     }
   };
