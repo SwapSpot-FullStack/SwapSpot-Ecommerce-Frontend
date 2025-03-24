@@ -1,86 +1,91 @@
-import { useEffect, useState } from "react";
-import axios from "../api/axios";
-import {
-  FaSearch,
-  FaCommentDots,
-  FaFilter,
-  FaSortAmountDownAlt,
-} from "react-icons/fa";
+import { useEffect, useState, useRef } from "react";
+import { FaCommentDots, FaFilter, FaSortAmountDownAlt } from "react-icons/fa";
 import placeholder from "../assets/placeholder.png";
 import { Link } from "react-router-dom";
 
 function Listings() {
   const [listings, setListings] = useState([]);
+  const [allListings, setAllListings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchListings = async () => {
-      try {
-        const mock = [
-          {
-            _id: "1",
-            title: "Tent",
-            description:
-              "Waterproof and lightweight. Great for hiking and camping.",
-            price: 50,
-            category: "Outdoors",
-          },
-          {
-            _id: "2",
-            title: "Coffee Maker",
-            description: "Brew the best coffee. Works with ground or capsule.",
-            price: 25,
-            category: "Kitchen",
-          },
-          {
-            _id: "3",
-            title: "Bluetooth Speaker",
-            description: "Portable with deep bass and long battery life.",
-            price: 40,
-            category: "Electronics",
-          },
-          {
-            _id: "4",
-            title: "Winter Jacket",
-            description: "Warm and waterproof. Perfect for snow or rain.",
-            price: 60,
-            category: "Fashion",
-          },
-          {
-            _id: "5",
-            title: "Winter Jacket",
-            description: "Warm and waterproof. Perfect for snow or rain.",
-            price: 60,
-            category: "Fashion",
-          },
-          {
-            _id: "6",
-            title: "Winter Jacket",
-            description: "Warm and waterproof. Perfect for snow or rain.",
-            price: 60,
-            category: "Fashion",
-          },
-        ];
-        setListings(mock);
-      } catch (err) {
-        setError(err.response?.data?.message || "Failed to fetch listings");
-      } finally {
-        setLoading(false);
-      }
-    };
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [sortOpen, setSortOpen] = useState(false);
 
-    fetchListings();
+  const filterRef = useRef();
+  const sortRef = useRef();
+
+  useEffect(() => {
+    const mock = [
+      {
+        _id: "1",
+        title: "Tent",
+        price: 50,
+        category: "Outdoors",
+        description: "Waterproof and lightweight.",
+        user: "Sarah",
+        avatar: "👩‍🦰",
+      },
+      {
+        _id: "2",
+        title: "Coffee Maker",
+        price: 25,
+        category: "Kitchen",
+        description: "Brew the best coffee.",
+        user: "Alex",
+        avatar: "👨🏻",
+      },
+      {
+        _id: "3",
+        title: "Bluetooth Speaker",
+        price: 40,
+        category: "Electronics",
+        description: "Portable with deep bass.",
+        user: "John",
+        avatar: "🧔🏻",
+      },
+      {
+        _id: "4",
+        title: "Winter Jacket",
+        price: 60,
+        category: "Fashion",
+        description: "Warm and waterproof.",
+        user: "Bartholomew",
+        avatar: "🧑‍🎨",
+      },
+    ];
+    setListings(mock);
+    setAllListings(mock);
+    setLoading(false);
   }, []);
 
-  const handleSort = () => {
-    const sorted = [...listings].sort((a, b) => a.price - b.price);
-    setListings(sorted);
+  useEffect(() => {
+    const closeDropdowns = (e) => {
+      if (!filterRef.current?.contains(e.target)) setFilterOpen(false);
+      if (!sortRef.current?.contains(e.target)) setSortOpen(false);
+    };
+    document.addEventListener("mousedown", closeDropdowns);
+    return () => document.removeEventListener("mousedown", closeDropdowns);
+  }, []);
+
+  const handleCategoryFilter = (category) => {
+    const filtered = allListings.filter((item) => item.category === category);
+    setListings(filtered);
+    setFilterOpen(false);
   };
 
-  const handleFilter = () => {
-    const filtered = listings.filter((l) => l.category === "Outdoors");
-    setListings(filtered);
+  const handleSort = (order) => {
+    const sorted = [...listings].sort((a, b) =>
+      order === "asc" ? a.price - b.price : b.price - a.price
+    );
+    setListings(sorted);
+    setSortOpen(false);
+  };
+
+  const resetListings = () => {
+    setListings(allListings);
+    setFilterOpen(false);
+    setSortOpen(false);
   };
 
   if (loading) return <p className="page-message">Loading listings...</p>;
@@ -88,19 +93,64 @@ function Listings() {
 
   return (
     <main className="listings-page">
-      <div className="sub-navbar">
-        <h2 className="pill-label">Products</h2>
-      </div>
+      <h2 className="pill-label">Products</h2>
 
       <div className="filter-sort-bar">
-        <button className="pill-button" onClick={handleFilter}>
-          <FaFilter style={{ marginRight: "6px" }} />
-          Filter
-        </button>
-        <button className="pill-button" onClick={handleSort}>
-          <FaSortAmountDownAlt style={{ marginRight: "6px" }} />
-          Sort
-        </button>
+        {/* Filter Dropdown */}
+        <div className="dropdown" ref={filterRef}>
+          <button
+            className="pill-button"
+            onClick={() => {
+              setFilterOpen(!filterOpen);
+              setSortOpen(false);
+            }}
+          >
+            <FaFilter style={{ marginRight: "6px" }} />
+            Filter
+          </button>
+          {filterOpen && (
+            <div className="dropdown-menu">
+              <button onClick={() => handleCategoryFilter("Electronics")}>
+                Electronics
+              </button>
+              <button onClick={() => handleCategoryFilter("Fashion")}>
+                Fashion
+              </button>
+              <button onClick={() => handleCategoryFilter("Outdoors")}>
+                Outdoors
+              </button>
+              <button onClick={() => handleCategoryFilter("Kitchen")}>
+                Kitchen
+              </button>
+              <button onClick={resetListings}>Reset</button>
+            </div>
+          )}
+        </div>
+
+        {/* Sort Dropdown */}
+        <div className="dropdown" ref={sortRef}>
+          <button
+            className="pill-button"
+            onClick={() => {
+              setSortOpen(!sortOpen);
+              setFilterOpen(false);
+            }}
+          >
+            <FaSortAmountDownAlt style={{ marginRight: "6px" }} />
+            Sort
+          </button>
+          {sortOpen && (
+            <div className="dropdown-menu">
+              <button onClick={() => handleSort("asc")}>
+                Price: Low → High
+              </button>
+              <button onClick={() => handleSort("desc")}>
+                Price: High → Low
+              </button>
+              <button onClick={resetListings}>Reset</button>
+            </div>
+          )}
+        </div>
       </div>
 
       {listings.length === 0 ? (
@@ -125,22 +175,23 @@ function Listings() {
                   <h3 className="card-title">{listing.title}</h3>
                   <p className="card-description">${listing.price}</p>
                   <p className="listing-description">{listing.description}</p>
-                  <span className="listing-category-pill">
-                    {listing.category}
-                  </span>
-                </div>
-                <div className="listing-actions">
-                  <button
-                    className="listing-icon"
-                    title="Message Seller"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      alert("Message feature coming soon!");
-                    }}
-                  >
-                    <FaCommentDots />
-                  </button>
-                  <FaSearch className="listing-icon" title="View Item" />
+
+                  <div className="listing-meta-row">
+                    <span className="listing-category-pill">
+                      {listing.category}
+                    </span>
+                    {listing.user && listing.avatar && (
+                      <Link
+                        to={`/chat/${listing._id}`}
+                        state={{ user: listing.user, avatar: listing.avatar }}
+                        className="listing-icon"
+                        title={`Message ${listing.user}`}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <FaCommentDots />
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
             </Link>
