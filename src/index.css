@@ -1,7 +1,17 @@
 /* Base resets */
 body {
   margin: 0;
+  padding: 0;
+  min-height: 100vh;
   font-family: Arial, sans-serif;
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(12, 148, 24, 1) 49%,
+    rgba(112, 151, 159, 1) 97%
+  );
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 /* Header */
@@ -472,7 +482,7 @@ main {
   text-decoration: underline;
 }
 
-/* === Sub Navbar (Gray strip below header) === */
+/* Sub Navbar (Gray strip below header)  */
 .sub-navbar {
   background-color: #999ca0;
   color: white;
@@ -560,32 +570,24 @@ body {
   margin-top: auto;
 }
 
-/* 1. Reset & ensure full height on root elements */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-}
-
-/* 2. Make React root element full height */
+/* Make React root element full height */
 #root {
   height: 100%;
 }
 
-/* 3. Full-page wrapper */
+/* Full-page wrapper */
 .page-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* 4. Main content should expand to push footer down */
+/* Main content should expand to push footer down */
 .main-content {
   flex: 1;
 }
 
-/* 5. Footer styling */
+/* Footer styling */
 .footer {
   background-color: #1e6f5c;
   color: white;
@@ -594,7 +596,7 @@ body {
   margin-top: auto;
 }
 
-/* 🔁 Reset scroll & height */
+/* Reset scroll & height */
 html,
 body,
 #root {
@@ -603,7 +605,7 @@ body,
   height: 100%;
 }
 
-/* 🧱 Page wrapper stretches full height */
+/* Page wrapper stretches full height */
 .page-wrapper {
   display: flex;
   flex-direction: column;
@@ -611,13 +613,13 @@ body,
   overflow-x: hidden; /* prevents sideways scroll */
 }
 
-/* 🔄 Main grows to fill space */
+/* Main grows to fill space */
 .main-content {
   flex: 1;
   padding: 1rem 1.5rem;
 }
 
-/* ✅ Footer is pushed to bottom */
+/* Footer is pushed to bottom */
 .footer {
   background-color: #1e6f5c;
   color: white;
@@ -645,7 +647,7 @@ body,
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: transparent; /* ✅ make container invisible */
+  background: transparent;
   box-shadow: none;
   padding: 0;
 }
@@ -653,7 +655,7 @@ body,
 .category-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 32px 48px; /* bigger gaps */
+  gap: 32px 48px;
   justify-items: center;
   margin-top: 24px;
 }
@@ -661,7 +663,7 @@ body,
 .category-button {
   background-color: #1e6f5c;
   color: white;
-  padding: 20px 40px; /* bigger pill */
+  padding: 20px 40px;
   border-radius: 9999px;
   border: none;
   font-size: 18px;
@@ -684,7 +686,7 @@ body,
 }
 
 .featured-card {
-  background: rgba(0, 0, 0, 0.35); /* dark glassy effect */
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
@@ -809,12 +811,12 @@ body,
   display: flex;
   justify-content: center;
   gap: 16px;
-  margin: 8px 0 48px; /* Top 16px, Bottom 48px for space before cards */
+  margin: 8px 0 48px;
 }
 
 .listing-card {
   width: 100%;
-  min-height: 300px; /* adjust as needed */
+  min-height: 300px;
   padding: 2rem;
   font-size: 1.05rem;
 }
@@ -877,9 +879,9 @@ body,
 
 .listings-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+  grid-template-columns: repeat(2, 1fr);
   grid-auto-rows: auto;
-  gap: 3.5rem 4rem; /* row gap | column gap */
+  gap: 3.5rem 4rem;
   width: 100%;
   max-width: 900px;
   margin-top: 3rem;
@@ -890,20 +892,6 @@ body,
   .listings-grid {
     grid-template-columns: 1fr;
   }
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background: linear-gradient(
-    90deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(12, 148, 24, 1) 49%,
-    rgba(112, 151, 159, 1) 97%
-  );
-  background-attachment: fixed;
-  background-size: cover;
 }
 
 .listing-card:hover .listing-description {
@@ -971,8 +959,8 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   padding: 2rem;
   width: 100%;
-  max-width: 380px; /* Increased card width */
-  min-height: 380px; /* Optional: make taller */
+  max-width: 380px;
+  min-height: 380px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -1290,7 +1278,7 @@ select.form-input {
 
 /* Creamy matcha hover effect */
 .dropdown-menu button:hover {
-  background: #d3f5cf; /* creamy matcha green */
+  background: #d3f5cf;
   color: #1e6f5c;
 }
 

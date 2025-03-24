@@ -29,16 +29,17 @@ function Login() {
     }
 
     try {
-      const response = await axios.post("/auth/login", { email, password });
+      // ✅ FIXED endpoint path
+      const response = await axios.post("/login", { email, password });
       const token = response.data.token;
 
-      login(token);
+      login(token); // Save token to context/localStorage
       toast.success("Logged in successfully 👋");
 
       setEmail("");
       setPassword("");
 
-      navigate("/listings");
+      navigate("/listings"); // Redirect after login
     } catch (err) {
       setError(err.response?.data?.message ?? "Login failed");
       toast.error(err.response?.data?.message ?? "Login failed");

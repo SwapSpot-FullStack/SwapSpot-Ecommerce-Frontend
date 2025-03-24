@@ -1,11 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "/api",
+  baseURL: "https://swapspot-ecommerce-backend.onrender.com/api/users",
   withCredentials: true,
 });
-
-export default instance;
 
 instance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
@@ -14,3 +12,5 @@ instance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+export default instance;
