@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import featuredImg from "../assets/featured-img.png";
+import Footer from "../components/Footer";
 
 function Home() {
   return (
@@ -62,10 +63,7 @@ function Home() {
           </Link>
         </div>
       </main>
-
-      <footer className="footer">
-        <p>&copy; 2025 SwapSpot. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
