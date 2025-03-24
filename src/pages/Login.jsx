@@ -16,7 +16,6 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!email.includes("@")) {
       setError("Enter a valid email.");
       toast.error("Invalid email.");
@@ -36,7 +35,6 @@ function Login() {
       login(token);
       toast.success("Logged in successfully 👋");
 
-      // Clear inputs
       setEmail("");
       setPassword("");
 
