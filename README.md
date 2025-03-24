@@ -1,6 +1,6 @@
 # SwapSpot – Front-End Web Application
 
-SwapSpot is a modern, responsive item-swapping web application. This front-end project was built to integrate with a fully functional backend (Node.js + Express + MongoDB) and demonstrates professional-level skills in frontend development, including responsive design, API integration, error handling, code testing, and accessibility practices.
+Welcome! This is the frontend setup for SwapSpot. It is intended to be a full-stack, ecommerce marketplace platform. SwapSpot enables secure transactions between users, offering features such as responsive design, API integration, error handling, code testing, and accessibility practices.
 
 ## Live Demo
 

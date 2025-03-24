@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://swapspot-ecommerce-backend.onrender.com/api/users",
+  baseURL: "https://swapspot-ecommerce-backend.onrender.com/api",
   withCredentials: true,
 });
 

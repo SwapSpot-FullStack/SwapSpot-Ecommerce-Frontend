@@ -18,21 +18,19 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1. Username validation
+    // Validation checks
     if (username.trim().length < 3) {
       setError("Username must be at least 3 characters.");
       toast.error("Username must be at least 3 characters.");
       return;
     }
 
-    // 2. Email validation
     if (!email.includes("@")) {
       setError("Enter a valid email address.");
       toast.error("Enter a valid email address.");
       return;
     }
 
-    // 3. Password validation
     if (password.length < 6) {
       setError("Password must be at least 6 characters.");
       toast.error("Password too short.");
@@ -46,11 +44,11 @@ function Register() {
     }
 
     try {
-      await axios.post("/users/register", { username, email, password });
+      // ✅ Corrected endpoint
+      await axios.post("/api/users/register", { username, email, password });
 
       toast.success("Registration successful ✅");
 
-      // 4. Clear form after registration
       setUsername("");
       setEmail("");
       setPassword("");
@@ -74,6 +72,7 @@ function Register() {
               Login here
             </a>
           </p>
+
           <input
             type="text"
             placeholder="Username"
@@ -82,6 +81,7 @@ function Register() {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
+
           <input
             type="email"
             placeholder="Email"
@@ -91,7 +91,6 @@ function Register() {
             required
           />
 
-          {/* Show/Hide Password Toggle */}
           <div style={{ position: "relative" }}>
             <input
               type={showPassword ? "text" : "password"}
@@ -149,6 +148,7 @@ function Register() {
           </button>
         </form>
       </div>
+      <Footer />
     </main>
   );
 }
