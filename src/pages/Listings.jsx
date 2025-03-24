@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { FaCommentDots, FaFilter, FaSortAmountDownAlt } from "react-icons/fa";
 import placeholder from "../assets/placeholder.png";
-import { Link } from "react-router-dom";
 
 function Listings() {
   const [listings, setListings] = useState([]);
@@ -14,6 +14,9 @@ function Listings() {
 
   const filterRef = useRef();
   const sortRef = useRef();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const selectedCategory = queryParams.get("category");
 
   useEffect(() => {
     const mock = [
@@ -54,10 +57,20 @@ function Listings() {
         avatar: "🧑‍🎨",
       },
     ];
-    setListings(mock);
+
     setAllListings(mock);
+
+    if (selectedCategory) {
+      const filtered = mock.filter(
+        (item) => item.category === selectedCategory
+      );
+      setListings(filtered);
+    } else {
+      setListings(mock);
+    }
+
     setLoading(false);
-  }, []);
+  }, [selectedCategory]);
 
   useEffect(() => {
     const closeDropdowns = (e) => {
