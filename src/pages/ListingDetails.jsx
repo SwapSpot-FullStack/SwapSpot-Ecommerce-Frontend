@@ -2,12 +2,14 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import placeholder from "../assets/placeholder.png";
 
+// Component to display the details of a specific listing
 function ListingDetails() {
-  const { id } = useParams();
-  const [listing, setListing] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { id } = useParams(); // Get the listing ID from the URL parameters
+  const [listing, setListing] = useState(null); // State to hold the fetched listing data
+  const [loading, setLoading] = useState(true); // State to manage loading state
+  const [error, setError] = useState(null); // State to handle errors
 
+  // UseEffect hook to fetch listing data based on the listing ID from the URL
   useEffect(() => {
     const mockListings = [
       {
@@ -41,18 +43,22 @@ function ListingDetails() {
       },
     ];
 
+    // Find the listing that matches the ID from the URL
     const found = mockListings.find((item) => item._id === id);
 
     if (!found) {
-      setError("Listing not found");
+      setError("Listing not found"); // Set error if listing is not found
     } else {
-      setListing(found);
+      setListing(found); // Set the found listing in the state
     }
 
-    setLoading(false);
-  }, [id]);
+    setLoading(false); // Set loading to false once data fetching is complete
+  }, [id]); // Dependency array ensures this runs whenever the ID changes
 
+  // Display loading message while fetching data
   if (loading) return <p className="page-message">Loading...</p>;
+
+  // Display error message if listing not found
   if (error) return <p className="form-error">{error}</p>;
 
   return (
@@ -61,18 +67,25 @@ function ListingDetails() {
         className="glass-box"
         style={{ maxWidth: "600px", textAlign: "center" }}
       >
+        {/* Display the listing's title */}
         <h2 className="form-title">{listing.title}</h2>
+
+        {/* Display listing image (use placeholder if imageUrl is not available) */}
         <img
           src={listing.imageUrl || placeholder}
-          alt={listing.title}
+          alt={listing.title} // Alt text for the image
           style={{ width: "100%", borderRadius: "1rem", marginBottom: "1rem" }}
         />
+
+        {/* Display price and category */}
         <p>
           <strong>Price:</strong> ${listing.price}
         </p>
         <p>
           <strong>Category:</strong> {listing.category}
         </p>
+
+        {/* Display the listing description */}
         <p style={{ marginTop: "1rem" }}>{listing.description}</p>
       </div>
     </main>

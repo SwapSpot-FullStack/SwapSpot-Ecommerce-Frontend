@@ -3,33 +3,34 @@ import Navbar from "../components/Navbar";
 import featuredImg from "../assets/placeholder.png";
 import Footer from "../components/Footer";
 
+// Home page component displaying featured items and categories
 function Home() {
   return (
     <div className="page-wrapper">
-      <Navbar />
-
+      <Navbar /> {/* Navbar component */}
       <main className="main-content">
         {/* Featured Section */}
         <section className="featured" aria-labelledby="featured-title">
           <h2 id="featured-title" className="pill-label">
-            Featured
+            Featured {/* Title of the featured section */}
           </h2>
           <div className="featured-card">
             <img
-              src={featuredImg}
-              alt="Black winter jacket with fur hood"
+              src={featuredImg} // Display featured image
+              alt="Black winter jacket with fur hood" // Descriptive alt text for accessibility
               className="featured-image"
             />
-            <div>
-              <p>Check out this sick winter jacket!</p>
+            <div className="featured-content">
+              <p>Check out this sick winter jacket!</p>{" "}
+              {/* Description of the featured item */}
               <Link
-                to="/listings/4"
-                className="pill-button"
-                style={{ marginTop: "1rem" }}
+                to="/listings/4" // Link to detailed page of this listing
+                className="pill-button mt-4"
                 aria-label="View more details about the winter jacket"
               >
                 View More
-              </Link>
+              </Link>{" "}
+              {/* Button to view more details of the item */}
             </div>
           </div>
         </section>
@@ -37,9 +38,10 @@ function Home() {
         {/* Categories Section */}
         <section className="categories" aria-labelledby="categories-title">
           <h2 id="categories-title" className="pill-label">
-            Categories
+            Categories {/* Title for the categories section */}
           </h2>
           <div className="category-grid">
+            {/* Link for each category with filter */}
             <Link
               to="/listings?category=Electronics"
               className="category-button"
@@ -74,12 +76,12 @@ function Home() {
             className="list-item-button"
             aria-label="Create a new listing"
           >
-            List Item
+            List Item{" "}
+            {/* Link to the page where the user can create a listing */}
           </Link>
         </section>
       </main>
-
-      <Footer />
+      <Footer /> {/* Footer component */}
     </div>
   );
 }

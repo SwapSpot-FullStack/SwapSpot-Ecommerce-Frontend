@@ -482,7 +482,6 @@ main {
   text-decoration: underline;
 }
 
-/* Sub Navbar (Gray strip below header)  */
 .sub-navbar {
   background-color: #999ca0;
   color: white;
@@ -521,7 +520,6 @@ main {
   text-decoration: underline;
 }
 
-/* Prevent unnecessary body scroll */
 html,
 body {
   margin: 0;
@@ -570,7 +568,6 @@ body {
   margin-top: auto;
 }
 
-/* Make React root element full height */
 #root {
   height: 100%;
 }
@@ -582,7 +579,6 @@ body {
   min-height: 100vh;
 }
 
-/* Main content should expand to push footer down */
 .main-content {
   flex: 1;
 }
@@ -605,21 +601,18 @@ body,
   height: 100%;
 }
 
-/* Page wrapper stretches full height */
 .page-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden; /* prevents sideways scroll */
+  overflow-x: hidden;
 }
 
-/* Main grows to fill space */
 .main-content {
   flex: 1;
   padding: 1rem 1.5rem;
 }
 
-/* Footer is pushed to bottom */
 .footer {
   background-color: #1e6f5c;
   color: white;
@@ -1276,7 +1269,7 @@ select.form-input {
   transition: background 0.2s ease;
 }
 
-/* Creamy matcha hover effect */
+/* hover effect */
 .dropdown-menu button:hover {
   background: #d3f5cf;
   color: #1e6f5c;
@@ -1345,4 +1338,69 @@ select.form-input {
   border: none;
   border-radius: 2rem;
   cursor: pointer;
+}
+
+/* Mobile Home Page Responsiveness */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  padding: 32px;
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .featured {
+    width: 100%;
+  }
+
+  .categories {
+    width: 100%;
+  }
+
+  .category-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .pill-label {
+    font-size: 1.25rem;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .category-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .category-button {
+    width: 48%;
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .category-grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .category-button {
+    width: 80%;
+    margin-bottom: 1rem;
+  }
 }
